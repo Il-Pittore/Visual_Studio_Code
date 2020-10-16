@@ -20,11 +20,11 @@ def speak(text):
 #def get_audio():
 #    r = sp.Recognizer()
 #    with sp.Microphone() as source:
-#        r.adjust_for_ambient_noise(source, duration=1)
+#        r.adjust_for_ambient_noise(source, duration = 1)
 #        audio = r.listen(source)
 #        result = ""
 #        try:
-#            result = r.recognize_google(audio, lanhuage = 'it-IT')
+#            result = r.recognize_google(audio, lanhuage = 'it')
 #            print(result)
 #        except Exception as e:
 #            print("Errore")
