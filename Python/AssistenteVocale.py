@@ -6,19 +6,22 @@ import speech_recognition as sp
 import datetime
 import shlex
 import pyaudio
+import webbrowser
 
-muto = ["stop", "basta", "stai zitta"]
+muto = ["stop", "basta", "stai zitta", "muta"]
 luna = ["luna"]
-arresto = ["spegniti", "alt f 4"]
+arresto = ["spegniti", "alt f4", "spegni"]
 time_calendar_clock = ["data e ora", "dimmi la data e l'ora"]
 time_clock = ["che ore sono", "orario", "ora", "dimmi che ore sono"]
 time_calendar = ["che giorno è oggi", "data", "dimmi che giorno è"]
 calcoli = ["calcola", "fammi una'operazione"]
 operazioni = ["somma", "sottrazione", "moltiplicazione", "divisione"]
+cerca = ["cerca"]
 saluti_in = ["ciao", "ciao luna", "ehi", "eccomi"]
 saluti_out = ["ehi", "ciao", "sono felice che tu mi abbia salutato"]
 insulto_in = ["stai zitta puttana", "stai zitta troia", "puttana", "troia", "ritardata", "aborto"]
-insulto_out = ["hai ragione", "non è correttoso nei miei confronti"]
+insulto_out = ["hai ragione", "non è corretto nei miei confronti"]
+
 
 def speak(text):
     engine = pyttsx3.init()
@@ -40,6 +43,7 @@ def get_audio():
             print(result)
         except Exception as e:
             print("errore")
+        result = result.lower()
     return result
 
 def richiesta_numeri():
@@ -87,9 +91,9 @@ def richiesta_numeri():
                 i = i + 1
         if i == 0:
             if modalita == 1 or modalita == 3:
-                print("non hai inseriro numeri")
+                print("non hai inserito numeri")
             if modalita == 2 or modalita == 4:
-                speak("non hai inseriro numeri")
+                speak("non hai inserito numeri")
             controllo = 1
         else:
             controllo = 0
@@ -143,76 +147,116 @@ def calc_divisione(operandi_split):
     text_out = "Il risultato della sottrazione è " + str(operando_uno)
     return text_out
 
+def saluti():
+    ran = randrange(len(saluti_out))
+    text_out = saluti_out[ran]
+    return text_out
+
+def prelievo_data_ora():
+    data_ora = datetime.datetime.now()
+    data_ora = str(data_ora)
+    data_ora_split = data_ora.split()
+    return data_ora_split
+
+def ora(ora_split):
+    ora_split = ora_split.split(':')
+    text_out = "sono le ore " + ora_split[0] + " " + ora_split[1] + " minuti e " + ora_split[2] + " secondi"
+    return text_out
+
+def data(data_split):
+    mesi = ["", "gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"]
+
+    data_split = data_split.split('-')
+    numero_mese = int(data_split[1])
+    mese = mesi[numero_mese]
+    text_out = "oggi è il " + data_split[2] + " " + mese + " " + data_split[0] 
+    
+    return text_out
+
+def esecuzione_operazioni(operazione):
+    if operazione == "somma":
+        operandi_split = richiesta_numeri()
+        text_out = calc_somma(operandi_split)
+    elif operazione == "sottrazione":
+        operandi_split = richiesta_numeri()
+        text_out = calc_sottrazione(operandi_split)
+    elif operazione == "moltiplicazione":
+        operandi_split = richiesta_numeri()
+        text_out = calc_moltiplicazione(operandi_split)
+    elif operazione == "divisione":
+        operandi_split = richiesta_numeri()
+        text_out = calc_divisione(operandi_split)
+    else:
+        text_out = "Non conosco questa operazione, scusa"
+    return text_out
+
+def search(ricerca):
+    url = "https://www.google.com/search?q=" + ricerca
+    webbrowser.get().open(url)
+    text_out = "ecco cosa ho trovato riguardo " + ricerca
+    return text_out
+
+def scelta_modalita():
+    while True:
+        modalita = input("L'assistente lo vuoi utilizzare in modalità \n 1: completamente testuale \n 2: comandi testuali ma riposta vocale \n 3: comandi vocali ma riposta testuale \n 4: completamente vocale \n Inserisci il numero della scelta che vuoi eseguire: ")
+        if modalita == "1" or modalita == "2" or modalita == "3" or modalita == "4":
+            modalita = int(modalita)
+            break
+        else:
+            print("input errato")
+    return modalita
+        
+
 muta = 0
-modalita = 0
 text_in = None
 text_out = None
-modalita = input("L'assistente lo vuoi utilizzare in modalità \n 1: completamente testuale \n 2: comandi testuali ma riposta vocale \n 3: comandi vocali ma riposta testuale \n 4: completamente vocale \n Inserisci il numero della scelta che vuoi eseguire: ")
-modalita = int(modalita)
+modalita = scelta_modalita()
 while True:
-    if modalita == 1 or modalita == 3:
-        print("sono in ascolto...")
+    print("sono in ascolto...")
     if modalita == 3 or modalita == 4:
         text_in = get_audio()
     if modalita == 1 or modalita == 2:
         text_in = input()
-    if modalita == 1  or modalita == 3:
-        print("sto elaborando...")
-    text_in = text_in.lower()
+    print("sto elaborando...")
     text_out = text_in
     if text_in != None and text_in != "":
         if text_in in saluti_in:
-            ran = randrange(len(saluti_out))
-            text_out = saluti_out[ran]
+            text_out = saluti()
         elif text_in in time_clock or text_in in time_calendar or text_in in time_calendar_clock:
-            data_ora = datetime.datetime.now()
-            data_ora = str(data_ora)
-            data_ora_split = data_ora.split()
+            data_ora_split = prelievo_data_ora()
             if text_in in time_clock:
-                text_out = "sono le " + data_ora_split[1]
+                text_out = ora(data_ora_split[1])
             elif text_in in time_calendar:
-                text_out = "oggi è il " + data_ora_split[0]
+                text_out = data(data_ora_split[0])
             else:
-                text_out = "oggi è il " + data_ora_split[0] + " e sono le " + data_ora_split[1]
+                data = data(data_ora_split[0])
+                ora = ora(data_ora_split[1])
+                text_out = data + " e " + ora
         elif text_in in calcoli:
             if modalita == 2 or modalita == 4:
                 speak("Che operazione vuoi fare?")
+                print("sono in ascolto...")
             if modalita == 1 or modalita == 3:
                 print("Che operazione vuoi fare?")
             if modalita == 3 or modalita == 4:
                 operazione = get_audio()
             if modalita == 1 or modalita == 2:
                 operazione = input()
-            if operazione == "somma":
-                operandi_split = richiesta_numeri()
-                text_out = calc_somma(operandi_split)
-            elif operazione == "sottrazione":
-                operandi_split = richiesta_numeri()
-                text_out = calc_sottrazione(operandi_split)
-            elif operazione == "moltiplicazione":
-                operandi_split = richiesta_numeri()
-                text_out = calc_moltiplicazione(operandi_split)
-            elif operazione == "divisione":
-                operandi_split = richiesta_numeri()
-                text_out = calc_divisione(operandi_split)
-            else:
-                if modalita == 2 or modalita == 4:
-                    ("Non conosco questa operazione, scusa")
-                if modalita == 1 or modalita == 3:
-                    print("Non conosco questa operazione, scusa")
+            text_out = esecuzione_operazioni(operazione)
         elif text_in in operazioni:
-            if text_in == "somma":
-                operandi_split = richiesta_numeri()
-                text_out = calc_somma(operandi_split)
-            elif text_in == "sottrazione":
-                operandi_split = richiesta_numeri()
-                text_out = calc_sottrazione(operandi_split)
-            elif text_in == "moltiplicazione":
-                operandi_split = richiesta_numeri()
-                text_out = calc_moltiplicazione(operandi_split)
-            elif text_in == "divisione":
-                operandi_split = richiesta_numeri()
-                text_out = calc_divisione(operandi_split)
+            text_out = esecuzione_operazioni(text_in)
+        elif text_in in cerca:
+            if modalita == 2 or modalita == 4:
+                speak("Che cosa vuoi cercare?")
+                print("sono in ascolto...")
+            if modalita == 1 or modalita == 3:
+                print("Che cosa vuoi cercare?")
+            if modalita == 3 or modalita == 4:
+                ricerca = get_audio()
+            if modalita == 1 or modalita == 2:
+                ricerca = input()
+            text_out = search(ricerca)
+
 
         elif text_in in muto:
             text_out = "Ok a presto"
@@ -226,6 +270,8 @@ while True:
             muta = 0
         elif text_in in arresto:
             text_out = "Mi sono spenta, ciao"
+            if modalita == 2 or modalita == 4:
+                speak(text_out)
             if modalita == 1 or modalita == 3:
                 print(text_out)
             break
