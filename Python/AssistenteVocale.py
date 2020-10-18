@@ -19,8 +19,11 @@ operazioni = ["somma", "sottrazione", "moltiplicazione", "divisione"]
 cerca = ["cerca"]
 saluti_in = ["ciao", "ciao luna", "ehi", "eccomi"]
 saluti_out = ["ehi", "ciao", "sono felice che tu mi abbia salutato"]
-insulto_in = ["stai zitta puttana", "stai zitta troia", "puttana", "troia", "ritardata", "aborto"]
+insulto_in = ["stai zitta puttana", "stai zitta troia", "puttana", "troia", "ritardata", "aborto", "zoccola"]
 insulto_out = ["hai ragione", "non è corretto nei miei confronti"]
+stato_in = ["come stai", "come va", "come ti senti"]
+stato_out = ["bene", "male", "ho bisogno di quelche aggiornamento ma nulla di grave"]
+
 
 
 def speak(text):
@@ -152,6 +155,16 @@ def saluti():
     text_out = saluti_out[ran]
     return text_out
 
+def insulto():
+    ran = randrange(len(insulto_out))
+    text_out = insulto_out[ran]
+    return text_out
+
+def stato():
+    ran = randrange(len(stato_out))
+    text_out = stato_out[ran]
+    return text_out
+
 def prelievo_data_ora():
     data_ora = datetime.datetime.now()
     data_ora = str(data_ora)
@@ -222,6 +235,10 @@ while True:
     if text_in != None and text_in != "":
         if text_in in saluti_in:
             text_out = saluti()
+        elif text_in in stato_in:
+            text_out = stato()
+        elif text_in in insulto_in:
+            text_out = insulto()
         elif text_in in time_clock or text_in in time_calendar or text_in in time_calendar_clock:
             data_ora_split = prelievo_data_ora()
             if text_in in time_clock:
