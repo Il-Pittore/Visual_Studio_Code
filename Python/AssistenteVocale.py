@@ -8,8 +8,9 @@ import shlex
 import pyaudio
 import webbrowser
 
-muto = ["stop", "basta", "stai zitta", "muta"]
 luna = ["luna"]
+lista_comandi = ["lista comandi", "comandi"]
+muto = ["stop", "basta", "stai zitta", "muta"]
 arresto = ["spegniti", "alt f4", "spegni"]
 time_calendar_clock = ["data e ora", "dimmi la data e l'ora"]
 time_clock = ["che ore sono", "orario", "ora", "dimmi che ore sono"]
@@ -23,8 +24,6 @@ insulto_in = ["stai zitta puttana", "stai zitta troia", "puttana", "troia", "rit
 insulto_out = ["hai ragione", "non è corretto nei miei confronti"]
 stato_in = ["come stai", "come va", "come ti senti"]
 stato_out = ["bene", "male", "ho bisogno di quelche aggiornamento ma nulla di grave"]
-
-
 
 def speak(text):
     engine = pyttsx3.init()
@@ -103,6 +102,54 @@ def richiesta_numeri():
         if controllo == 0:
             break
     return operandi_split
+
+def lista_comandi_gestione():
+    lista = "Muto: "
+    i = 0
+    while i < len(muto):
+        lista = lista + ", " + muto[i]
+        i = i + 1
+    lista = lista + "\nSpegnimento: "
+    i = 0
+    while i < len(arresto):
+        lista = lista + ", " + arresto[i]
+        i = i + 1
+    lista = lista + "\nData e Ora: "
+    i = 0
+    while i < len(time_calendar_clock):
+        lista = lista + ", " + time_calendar_clock[i]
+        i = i + 1
+    lista = lista + "\nData: "
+    i = 0
+    while i < len(time_calendar):
+        lista = lista + ", " + time_calendar[i]
+        i = i + 1
+    lista = lista + "\nOra: "
+    i = 0
+    while i < len(time_clock):
+        lista = lista + ", " + time_clock[i]
+        i = i + 1
+    lista = lista + "\nRichiesta di un calcolo: "
+    i = 0
+    while i < len(calcoli):
+        lista = lista + ", " + calcoli[i]
+        i = i + 1
+    lista = lista + "\nRichiesta diretta di una operazione specifica: "
+    i = 0
+    while i < len(operazioni):
+        lista = lista + ", " + operazioni[i]
+        i = i + 1
+    lista = lista + "\nRicerca su internet: "
+    i = 0
+    while i < len(cerca):
+        lista = lista + ", " + cerca[i]
+        i = i + 1
+    lista = lista + "\nEsempi di dialoghi: "
+    i = 0
+    while i < len(saluti_in):
+        lista = lista + ", " + saluti_in[i]
+        i = i + 1
+    return lista
 
 def calc_somma(operandi_split):
     i = 0
@@ -219,7 +266,6 @@ def scelta_modalita():
             print("input errato")
     return modalita
         
-
 muta = 0
 text_in = None
 text_out = None
@@ -233,7 +279,9 @@ while True:
     print("sto elaborando...")
     text_out = text_in
     if text_in != None and text_in != "":
-        if text_in in saluti_in:
+        if text_in in lista_comandi:
+            text_out = lista_comandi_gestione()
+        elif text_in in saluti_in:
             text_out = saluti()
         elif text_in in stato_in:
             text_out = stato()
@@ -273,8 +321,6 @@ while True:
             if modalita == 1 or modalita == 2:
                 ricerca = input()
             text_out = search(ricerca)
-
-
         elif text_in in muto:
             text_out = "Ok a presto"
             muta = 1
