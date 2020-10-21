@@ -50,26 +50,6 @@ def get_audio():
 
 def richiesta_numeri():
 
-    #def controllo_numeri(operandi_split):
-    #    errore = "-99"
-    #    i = 0
-    #    while i in len(operandi_split) and i != int(errore):
-    #        if type(operandi_split[i]) != type(i):
-    #            if modalita == 1 or modalita == 3:
-    #                print("sei un coglione")
-    #            if modalita == 2 or modalita == 4:
-    #                speak("sei un coglione")
-    #            i = int(errore)
-    #            print(i)
-    #    if i == int(errore):
-    #        if modalita == 1 or modalita == 3:
-    #            print("non hai inseriro numeri")
-    #        if modalita == 2 or modalita == 4:
-    #            speak("non hai inseriro numeri")
-    #        return 1
-    #    else:
-    #        return 0
-
     while True:
         if modalita == 2 or modalita == 4:
             speak("dimmi i numeri")
@@ -81,13 +61,17 @@ def richiesta_numeri():
             operandi = input()
         operandi_split = operandi.split()
         i = 0
+        errore = 0
         while i < len(operandi_split):
-            if type(int(operandi_split[i])) != type(i):
+            try:
+                int(operandi_split[i])
+            except:
+                errore = errore + 1
                 if modalita == 1 or modalita == 3:
                     print("sei un coglione")
                 if modalita == 2 or modalita == 4:
                     speak("sei un coglione")
-                    i = 0
+                i = 0
                 break
             else:
                 i = i + 1
