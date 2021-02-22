@@ -1,3 +1,4 @@
+#fatto male
 from playsound import playsound
 from random import randrange
 import pyttsx3

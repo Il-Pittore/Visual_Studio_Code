@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuova Ricetta</title>
+</head>
+<body>
+<form action = "test.php" method = "post">
+    <input type='text' name="title" placeholder="Titolo ricetta"> <br>
+    <input type='text' name="description" placeholder="Descrizione"> <br>
+    <input type='text' name="ingredient" placeholder="Ingredienti"> <br>
+    <input type='text' name="proceedings" placeholder="Procedimenti"> <br>
+    <select name="mydropdown">
+        <option value="Antipasti">Antipasti</option>
+        <option value="Primi">Primi</option>
+        <option value="Secondi">Secondi</option>
+        <option value="Dolci">Dolci</option>
+    </select> <br>
+    <label for="immagineOVideo">Puoi caricare qui un'immagine o un video:</label>
+    <input type="file" id="immagineOVideo" name="avatar" accept="image/png, image/jpeg, video/mp4 "> <br>
+    <input type='submit' value="Salva"> <br>
+</form>
+</body>
+</html>

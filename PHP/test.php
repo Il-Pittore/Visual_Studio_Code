@@ -1,16 +1,12 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title></title>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta charset="UTF-8">
+    <title>Test</title>
 </head>
 <body>
-<input type="radio" name="sesso" id="U" value="U" />
-<label for="U">Uomo</label>
-<input type="radio" name="sesso" id="D" value="D" />
-<label for="D">Donna</label>
-<?php
-$pippo = ;
-echo $pippo;
-?>
+    <?php
+        print_r($_POST)
+        ?>
 </body>
 </html>
