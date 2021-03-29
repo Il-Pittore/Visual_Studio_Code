@@ -10,9 +10,11 @@
     {
         if ($riga[2] == $mail and $riga[3] == md5($password))
         {
+            echo "<script type='text/javascript'>alert('$messageLogin');</script>";
             if ($_POST["loggato"] == true)
             {
-                setcookie("cookies",$mail,time() + 3600);
+                echo "<script type='text/javascript'>alert('cookies');</script>";
+                setcookie("cookies",$mail,3600);
             }
-        }
+        }else echo "<script type='text/javascript'>alert('$messageError');</script>";
     }

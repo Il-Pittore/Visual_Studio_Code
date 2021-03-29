@@ -1,3 +1,2 @@
 <?php
-$pippo = 5;
-echo $pippo;
+print("Non hai abbonamenti salvati o non hai i cookies salvati <br>Riprova ");
