@@ -1,0 +1,28 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "start",
+			"path": "WebSockets/server-echo/",
+			"problemMatcher": [],
+			"label": "Run Server",
+			"detail": "node server.js"
+		},
+		{
+			"type": "npm",
+			"script": "start",
+			"path": "WebSockets/client-simple/",
+			"problemMatcher": [],
+			"label": "Run Client",
+			"detail": "node client.js"
+		},
+		{
+			"label": "Start Web Socket",
+			"dependsOn": [
+				"Run Server",
+				"Run Client"
+			]
+		}
+	]
+}
