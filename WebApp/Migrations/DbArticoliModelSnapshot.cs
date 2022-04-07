@@ -41,6 +41,9 @@ namespace WebApp.Migrations
                     b.Property<float>("PrezzoUno")
                         .HasColumnType("REAL");
 
+                    b.Property<string>("UrlImmagine")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("ArticoloID");
 
                     b.ToTable("Articoli");

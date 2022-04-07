@@ -10,5 +10,7 @@ public class Articolo
 	public float PrezzoUno { get; set; }
 	public float PrezzoDue { get; set; }
 	public DateTime DataAggiornamento {get; set;}
+
+	public string UrlImmagine{ get; set; }
 	public int Count {get; set;} = 0;
 }

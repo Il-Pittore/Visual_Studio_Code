@@ -1,3 +1,37 @@
-get http://localhost:5195/weatherforecast HTTP/1.1
+GET HTTP://localhost:5195/api/GiocoUno HTTP/1.1
+###
+GET HTTP://localhost:5195/api/GiocoUno/2 HTTP/1.1
+###
+POST HTTP://localhost:5195/api/GiocoUno HTTP/1.1
+Content-Type: application/json
 
+{
+	"descrizione": "Dixan Duo Caps detersivo lavatrice - 112 capsule",
+	"giustoPrezzo": 26.29,
+	"prezzoUno": 42.85,
+	"prezzoDue": 18.34,
+	"dataAggiornamento": "2022-01-31T00:00:00",
+"count": 0
+}
+###
+DELETE HTTP://localhost:5195/api/GiocoUno HTTP/1.1
+Content-Type: application/json
+{
+   "articoloID": 5
+}
+###
+DELETE HTTP://localhost:5195/api/GiocoUno/4 HTTP/1.1
+###
+PUT HTTP://localhost:5195/api/GiocoUno/3 HTTP/1.1
+Content-Type: application/json
+
+{
+	"articoloID": 3,
+	"descrizione": "Dixan Duo Caps detersivo lavatrice - 112 capsule", 
+	"giustoPrezzo": 26.29,
+	"prezzoUno": 42.85,
+	"prezzoDue": 18.34,
+	"dataAggiornamento": "2022-01-31T00:00:00",
+	"count": 10
+}
 ###
